@@ -22,9 +22,9 @@ module "custom_vpc" {
   lb_pub_sub_2 = "172.31.2.0/24"
   lb_pub_sub_3 = "172.31.3.0/24"
 
-  lb_pri_sub_1 = "172.31.4.0/24"
-  lb_pri_sub_2 = "172.31.5.0/24"
-  lb_pri_sub_3 = "172.31.6.0/24"
+  db_pri_sub_1 = "172.31.4.0/24"
+  db_pri_sub_2 = "172.31.5.0/24"
+  db_pri_sub_3 = "172.31.6.0/24"
 
   app_pri_sub_1 = "172.31.7.0/24"
   app_pri_sub_2 = "172.31.8.0/24"
@@ -33,4 +33,8 @@ module "custom_vpc" {
   az_1 = "${var.region}a"
   az_2 = "${var.region}b"
   az_3 = "${var.region}c"
+}
+
+module "custom rds" {
+  source = "./modules/rds"
 }

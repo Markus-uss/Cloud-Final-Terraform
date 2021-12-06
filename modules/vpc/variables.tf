@@ -38,14 +38,14 @@ variable "app_pri_sub_3" {
     type = string
 }
 
-variable "lb_pri_sub_1" {
+variable "db_pri_sub_1" {
     type = string
 }
 
-variable "lb_pri_sub_2" {
+variable "db_pri_sub_2" {
     type = string
 }
 
-variable "lb_pri_sub_3" {
+variable "db_pri_sub_3" {
     type = string
 }
