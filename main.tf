@@ -35,6 +35,13 @@ module "custom_vpc" {
   az_3 = "${var.region}c"
 }
 
-module "custom rds" {
+module "custom_rds" {
   source = "./modules/rds"
+
+  rds_username = var.rds_username
+  rds_password = var.rds_password
+
+  vpc_sub_1 = module.custom_vpc.db_private_sub_1
+  vpc_sub_2 = module.custom_vpc.db_private_sub_2
+  vpc_sub_3 = module.custom_vpc.db_private_sub_3
 }

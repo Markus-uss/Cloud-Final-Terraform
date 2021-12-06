@@ -10,7 +10,7 @@ resource "aws_vpc" "custom_vpc" {
 
 resource "aws_subnet" "lb_public_subnet_1" {
   vpc_id            = aws_vpc.custom_vpc.id
-  cidr_block        = var.lb_pub_sub_1_cidr
+  cidr_block        = var.lb_pub_sub_1
   availability_zone = var.az_1
 
   tags = {
@@ -20,7 +20,7 @@ resource "aws_subnet" "lb_public_subnet_1" {
 
 resource "aws_subnet" "lb_public_subnet_2" {
   vpc_id            = aws_vpc.custom_vpc.id
-  cidr_block        = var.lb_pub_sub_2_cidr
+  cidr_block        = var.lb_pub_sub_2
   availability_zone = var.az_2
 
   tags = {
@@ -30,7 +30,7 @@ resource "aws_subnet" "lb_public_subnet_2" {
 
 resource "aws_subnet" "lb_public_subnet_3" {
   vpc_id            = aws_vpc.custom_vpc.id
-  cidr_block        = var.lb_pub_sub_3_cidr
+  cidr_block        = var.lb_pub_sub_3
   availability_zone = var.az_3
 
   tags = {
@@ -42,7 +42,7 @@ resource "aws_subnet" "lb_public_subnet_3" {
 
 resource "aws_subnet" "app_private_subnet_1" {
   vpc_id            = aws_vpc.custom_vpc.id
-  cidr_block        = var.app_pri_sub_1_cidr
+  cidr_block        = var.app_pri_sub_1
   availability_zone = var.az_1
 
   tags = {
@@ -52,7 +52,7 @@ resource "aws_subnet" "app_private_subnet_1" {
 
 resource "aws_subnet" "app_private_subnet_2" {
   vpc_id            = aws_vpc.custom_vpc.id
-  cidr_block        = var.app_pri_sub_2_cidr
+  cidr_block        = var.app_pri_sub_2
   availability_zone = var.az_2
 
   tags = {
@@ -62,7 +62,7 @@ resource "aws_subnet" "app_private_subnet_2" {
 
 resource "aws_subnet" "app_private_subnet_3" {
   vpc_id            = aws_vpc.custom_vpc.id
-  cidr_block        = var.app_pri_sub_3_cidr
+  cidr_block        = var.app_pri_sub_3
   availability_zone = var.az_3
 
   tags = {
@@ -74,7 +74,7 @@ resource "aws_subnet" "app_private_subnet_3" {
 
 resource "aws_subnet" "db_private_subnet_1" {
   vpc_id            = aws_vpc.custom_vpc.id
-  cidr_block        = var.db_pri_sub_1_cidr
+  cidr_block        = var.db_pri_sub_1
   availability_zone = var.az_1
 
   tags = {
@@ -84,7 +84,7 @@ resource "aws_subnet" "db_private_subnet_1" {
 
 resource "aws_subnet" "db_private_subnet_2" {
   vpc_id            = aws_vpc.custom_vpc.id
-  cidr_block        = var.db_pri_sub_2_cidr
+  cidr_block        = var.db_pri_sub_2
   availability_zone = var.az_2
 
   tags = {
@@ -94,7 +94,7 @@ resource "aws_subnet" "db_private_subnet_2" {
 
 resource "aws_subnet" "db_private_subnet_3" {
   vpc_id            = aws_vpc.custom_vpc.id
-  cidr_block        = var.db_pri_sub_3_cidr
+  cidr_block        = var.db_pri_sub_3
   availability_zone = var.az_3
 
   tags = {
@@ -153,13 +153,32 @@ resource "aws_route_table_association" "public_rt_a_3" {
 
 resource "aws_security_group" "public_sg" {
   name   = "HTTP and SSH"
-  vpc_id = aws_vpc.some_custom_vpc.id
+  vpc_id = aws_vpc.custom_vpc.id
 
   ingress {
     from_port   = 80
     to_port     = 80
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = -1
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
+resource "aws_security_group" "private_sg" {
+  name   = "Private HTTP"
+  vpc_id = aws_vpc.custom_vpc.id
+
+  ingress {
+    from_port   = 8080
+    to_port     = 8080
+    protocol    = "tcp"
+    cidr_blocks = [var.vpc_cidr]
   }
 
   egress {
