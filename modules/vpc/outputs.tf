@@ -45,3 +45,13 @@ output "app_private_sub_2" {
 output "app_private_sub_3" {
     value = aws_subnet.app_private_subnet_3.id
 }
+
+# Security Groups
+
+output "public_sg" {
+    value = aws_security_group.public_sg.id
+}
+
+output "private_sg" {
+    value = aws_security_group.private_sg.id
+}
